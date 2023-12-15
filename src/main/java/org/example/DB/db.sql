@@ -10,7 +10,7 @@ CREATE TABLE `member`(
 	regDate dateTime NOT NULL,
 	updateDate dateTime NOT NULL
 );
-SELECT * FROM `member`;
+
 
 CREATE TABLE toDoList (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -30,6 +30,7 @@ CREATE TABLE toDoContents(
 	regDate dateTime NOT NULL,
 	updateDate dateTime NOT NULL
 );
+SELECT * FROM `member`;
 SELECT * FROM toDoList;
 SELECT * FROM toDoContents;
 INSERT INTO `member` SET userId = 'user1', password = '1234', successCount = 0, regDate = now(), updateDate = now();
