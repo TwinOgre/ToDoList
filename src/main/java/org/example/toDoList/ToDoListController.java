@@ -54,12 +54,23 @@ public class ToDoListController {
         for(int i = 0;i <  toDoListList.size(); i++){
             ToDoList tDL = toDoListList.get(i);
             if(tDL.isExecutionStatus()==true){
-                System.out.printf("%d  %s  %s  %s  %s  %s\n",tDL.getId(),tDL.getToDoTitle(),tDL.getToDoExplain(),tDL.getRegDate(),tDL.getUpdateDate(),"[○]" );
+                System.out.printf("%d  %s  %s  %s  %s  %s\n",tDL.getId(),tDL.getToDoTitle(),tDL.getToDoExplain(),tDL.getRegDate(),tDL.getUpdateDate(),"[❌]" );
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n",tDL.getId(),tDL.getToDoTitle(),tDL.getToDoExplain(),tDL.getRegDate(),tDL.getUpdateDate(),"[●]" );
+                System.out.printf("%d  %s  %s  %s  %s  %s\n",tDL.getId(),tDL.getToDoTitle(),tDL.getToDoExplain(),tDL.getRegDate(),tDL.getUpdateDate(),"[✔]" );
             }
-
         }
+    }
+
+    public void modify() {
+        System.out.print("수정할 ID번호를 입력해주세요: ");
+        String modifyId = Container.getScanner().nextLine();
+        // 1. 입력받은 ID 번호의 글이 존재하는지 확인
+        // 2. 로그인한 유저가 작성한 글인지 확인
+        System.out.print("제목: ");
+        String modifytitle = Container.getScanner().nextLine();
+        System.out.print("간략설명: ");
+        String modifyContent = Container.getScanner().nextLine();
+
 
     }
 }

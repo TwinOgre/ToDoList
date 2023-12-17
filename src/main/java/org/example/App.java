@@ -40,6 +40,7 @@ public class App {
                     toDoListController.list();
                     break;
                 case "수정":
+                    toDoListController.modify();
                     break;
                 case "삭제":
                     break;
