@@ -1,7 +1,6 @@
 package org.example.toDoContents;
 
 import org.example.Container;
-import org.example.toDoList.ToDoList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,23 @@ public class ToDoContentsRepository {
             }
         }
         return null;
+    }
+    public ToDoContents findByModifyId(int listId, int modifyId){
+        String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d",listId);
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
+        for (Map<String, Object> row : rows) {
+            ToDoContents toDoContents = new ToDoContents(row);
+            if (modifyId == toDoContents.getListId()) {
+                return toDoContents;
+            }
+        }
+        return null;
+
+    }
+
+    public void toDoContentsModify(int modifyContentId, String content) {
+        String sql = String.format("UPDATE toDoContents SET content = '%s' WHERE id = %d",content,modifyContentId);
+        Container.getDbConnection().update(sql);
     }
 //    public ToDoContents ToDoContentsFindById(int id) {
 //        List<ToDoContents> ToDoContentsList = this.listContent();

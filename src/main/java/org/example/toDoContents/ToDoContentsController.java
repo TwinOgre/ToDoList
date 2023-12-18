@@ -20,4 +20,10 @@ public class ToDoContentsController {
     public ToDoContents findById(int id) {
         return toDoContentsService.findById(id);
     }
+    public ToDoContents findByModifyId(int listId, int modifyId){
+        return toDoContentsService.findByModifyId(listId,modifyId);
+    }
+    public void toDoContentsModify(int modifyContentId, String content){
+         toDoContentsService.toDoContentsModify(modifyContentId, content);
+    }
 }

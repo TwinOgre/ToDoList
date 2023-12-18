@@ -86,18 +86,14 @@ public class ToDoListController {
         }
         System.out.print("상세 항목을 수정하시겠습니까?");
         String yesOrNo = Container.getScanner().nextLine().trim();
+
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
-            System.out.println("세부항목의 수정이 끝나면 \"끝\"이라고 입력해주세요.");
-            while (true) {
+            List<ToDoContents> toDoContentsList = toDoContentsController.listContent(modifyId);
+            for(int i = 0; i < toDoContentsList.size(); i++){
+                int modifyContentId =  toDoContentsList.get(i).getId();
                 System.out.print("세부항목: ");
                 String content = Container.getScanner().nextLine();
-                int listId = toDoList.getId();
-                if (content.equals("끝")) {
-                    break;
-                }
-
-//                toDoContentsController.modifyContent(listId, content);
-                System.out.println("세부항목이 수정 되었습니다.");
+                toDoContentsController.toDoContentsModify(modifyContentId,content);
             }
             System.out.println(modifyId + "번 글이 수정되었습니다.");
         } else if (yesOrNo.equals("아니오")|| yesOrNo.equals("아니")) {

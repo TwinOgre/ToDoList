@@ -18,4 +18,11 @@ public class ToDoContentsService {
     public ToDoContents findById(int id) {
         return toDoContentsRepository.findById(id);
     }
+    public ToDoContents findByModifyId(int listId, int modifyId){
+        return toDoContentsRepository.findByModifyId(listId,modifyId);
+    }
+
+    public void toDoContentsModify(int modifyContentId, String content) {
+        toDoContentsRepository.toDoContentsModify(modifyContentId, content);
+    }
 }
