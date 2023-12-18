@@ -28,7 +28,7 @@ public class ToDoListController {
 
         System.out.print("상세 항목을 작성하시겠습니까?");
         String yesOrNo = Container.getScanner().nextLine().trim();
-        if (yesOrNo.equals("예")) {
+        if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
             System.out.println("세부항목의 작성이 끝나면 \"끝\"이라고 입력해주세요.");
             while (true) {
                 System.out.print("세부항목: ");
@@ -41,7 +41,7 @@ public class ToDoListController {
                 System.out.println("세부항목이 등록 되었습니다.");
             }
             System.out.println(title + "이(가) 등록 되었습니다.");
-        } else if (yesOrNo.equals("아니오")) {
+        } else if (yesOrNo.equals("아니오")|| yesOrNo.equals("아니")) {
             System.out.println(title + "이(가) 등록 되었습니다.");
         }
 
@@ -62,6 +62,44 @@ public class ToDoListController {
     }
 
     public void modify() {
+        myList();
+        System.out.printf("수정할 ID번호를 입력해주세요)  ");
+        int modifyId = Container.getScanner().nextInt();
+        ToDoList toDoList = toDoListService.toDoListFindById(modifyId);
+        if(toDoList == null){
+            System.out.println(modifyId + "번 글은 존재하지 않습니다.");
+            Container.getScanner().nextLine();
+            return;
+        }
+        Container.getScanner().nextLine();
+        System.out.print("제목: ");
+        String title = Container.getScanner().nextLine();
+        System.out.print("간략설명: ");
+        String toDoExplain = Container.getScanner().nextLine();
+        toDoListService.modify(toDoList.getId(),title, toDoExplain);
+
+        System.out.print("상세 항목을 수정하시겠습니까?");
+        String yesOrNo = Container.getScanner().nextLine().trim();
+        if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
+            System.out.println("세부항목의 수정이 끝나면 \"끝\"이라고 입력해주세요.");
+            while (true) {
+                System.out.print("세부항목: ");
+                String content = Container.getScanner().nextLine();
+                int listId = toDoList.getId();
+                if (content.equals("끝")) {
+                    break;
+                }
+                // 수정필요
+//                toDoContentsController.modifyContent(listId, content);
+                System.out.println("세부항목이 수정 되었습니다.");
+            }
+            System.out.println(modifyId + "번 글이 수정되었습니다.");
+        } else if (yesOrNo.equals("아니오")|| yesOrNo.equals("아니")) {
+            System.out.println(modifyId + "번 글이 수정되었습니다.");
+        }
+
+
+
 
     }
 

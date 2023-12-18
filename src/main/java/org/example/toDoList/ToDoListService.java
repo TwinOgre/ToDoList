@@ -1,7 +1,5 @@
 package org.example.toDoList;
 
-import org.example.member.Member;
-
 import java.util.List;
 
 public class ToDoListService {
@@ -33,6 +31,13 @@ public class ToDoListService {
 
     public List<ToDoList> completeList() {
         return toDoListRepository.completeList();
+    }
+    public ToDoList toDoListFindById(int id){
+        return toDoListRepository.toDoListFindById(id);
+    }
+
+    public void modify(int id, String title, String toDoExplain) {
+        toDoListRepository.modify(id, title, toDoExplain);
     }
 }
 
