@@ -2,6 +2,7 @@ package org.example.toDoList;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Container;
 
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class ToDoList {
     private boolean executionStatus;
 
     ToDoList(Map<String, Object> row) {
+
         this.id = (int) row.get("id");
         this.memberId = (int) row.get("memberId");
         this.toDoTitle = (String) row.get("toDoTitle");

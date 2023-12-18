@@ -63,17 +63,25 @@ public class ToDoListRepository {
     }
 
     public ToDoList toDoListFindById(int id) {
-        String sql = String.format("SELECT * FROM toDoList WHERE id = %d;", id);
-        Map<String, Object> row = Container.getDbConnection().selectRow(sql);
-        ToDoList toDoList = new ToDoList(row);
-        return toDoList;
-//        List<ToDoList> toDoListList = this.toDoList();
-//        for (int i = 0; i < toDoListList.size(); i++) {
-//            if (id == toDoListList.get(i).getId()) {
-//                return toDoListList.get(i);
-//            }
-//        }
-//        return null;
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("SELECT * FROM toDoList");
+        for (Map<String, Object> row : rows) {
+            ToDoList toDoList = new ToDoList(row);
+            if (id == toDoList.getId()) {
+                return toDoList;
+            }
+        }
+        return null;
+
+//        String sql = String.format("SELECT * FROM toDoList WHERE id = %d;", id);
+//        Map<String, Object> row;
+//             row = Container.getDbConnection().selectRow(sql);
+//        ToDoList toDoList = new ToDoList(row);
+//        return toDoList;
+
+
+
+
+
     }
 
     public void modify(int id, String title, String toDoExplain) {
@@ -81,3 +89,10 @@ public class ToDoListRepository {
         Container.getDbConnection().update(sql);
     }
 }
+//        List<ToDoList> toDoListList = this.toDoList();
+//        for (int i = 0; i < toDoListList.size(); i++) {
+//            if (id == toDoListList.get(i).getId()) {
+//                return toDoListList.get(i);
+//            }
+//        }
+//        return null;

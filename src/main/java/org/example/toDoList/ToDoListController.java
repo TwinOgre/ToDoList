@@ -78,6 +78,8 @@ public class ToDoListController {
         String toDoExplain = Container.getScanner().nextLine();
         toDoListService.modify(toDoList.getId(),title, toDoExplain);
 
+        // 세부항목이 있는 지 확인
+
         System.out.print("상세 항목을 수정하시겠습니까?");
         String yesOrNo = Container.getScanner().nextLine().trim();
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
@@ -89,7 +91,7 @@ public class ToDoListController {
                 if (content.equals("끝")) {
                     break;
                 }
-                // 수정필요
+
 //                toDoContentsController.modifyContent(listId, content);
                 System.out.println("세부항목이 수정 되었습니다.");
             }
