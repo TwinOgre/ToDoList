@@ -1,5 +1,7 @@
 package org.example.toDoContents;
 
+import java.util.List;
+
 public class ToDoContentsController {
     ToDoContentsService toDoContentsService;
 
@@ -9,4 +11,10 @@ public class ToDoContentsController {
     public void createContent(int listId,String content) {
         toDoContentsService.createContent(listId, content);
     }
+
+    public List<ToDoContents> listContent(int id) {
+        return toDoContentsService.listContent(id);
+    }
+
+
 }

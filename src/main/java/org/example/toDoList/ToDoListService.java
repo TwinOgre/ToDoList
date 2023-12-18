@@ -22,5 +22,13 @@ public class ToDoListService {
     public List<ToDoList> list() {
         return toDoListRepository.list();
     }
+
+    public List<ToDoList> myList() {
+        return toDoListRepository.myList();
+    }
+
+    public List<ToDoList> toDoList() {
+        return toDoListRepository.toDoList();
+    }
 }
 

@@ -40,12 +40,15 @@ public class App {
                     toDoListController.list();
                     break;
                 case "수정":
+                    toDoListController.modify();
                     break;
                 case "삭제":
                     break;
                 case "내목록":
+                    toDoListController.myList();
                     break;
                 case "할일목록":
+                    toDoListController.toDoList();
                     break;
                 case "완료목록":
                     break;

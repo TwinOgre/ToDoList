@@ -1,6 +1,7 @@
 package org.example.toDoList;
 
 import org.example.Container;
+import org.example.toDoContents.ToDoContents;
 import org.example.toDoContents.ToDoContentsController;
 
 import java.util.ArrayList;
@@ -49,17 +50,73 @@ public class ToDoListController {
     public void list() {
         List<ToDoList> toDoListList = toDoListService.list();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
-        System.out.println("- 상세항목");
+//        System.out.println("- 상세항목");
         System.out.println("==================================================");
-        for(int i = 0;i <  toDoListList.size(); i++){
+        for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
-            if(tDL.isExecutionStatus()==true){
-                System.out.printf("%d  %s  %s  %s  %s  %s\n",tDL.getId(),tDL.getToDoTitle(),tDL.getToDoExplain(),tDL.getRegDate(),tDL.getUpdateDate(),"[○]" );
+            if (tDL.isExecutionStatus() == true) {
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n",tDL.getId(),tDL.getToDoTitle(),tDL.getToDoExplain(),tDL.getRegDate(),tDL.getUpdateDate(),"[●]" );
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
             }
+        }
+    }
 
+    public void modify() {
+
+    }
+
+    public void myList() {
+        List<ToDoList> toDoListList = toDoListService.myList();
+        System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
+        System.out.println("- 상세항목");
+        // 세부항목 추가 필요
+        System.out.println("==================================================");
+        for (int i = 0; i < toDoListList.size(); i++) {
+            ToDoList tDL = toDoListList.get(i);
+            if (tDL.isExecutionStatus() == true) {
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
+                List<ToDoContents> toDoContentsList = toDoContentsController.listContent(tDL.getId());
+                for (int t = 0; t < toDoContentsList.size(); t++) {
+                    ToDoContents tDC = toDoContentsList.get(t);
+                    if (tDC.isExecutionStatus() == true) {
+                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[❌]");
+                    } else if (tDC.isExecutionStatus() == false) {
+                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[⭕]");
+                    }
+                }
+            } else if (tDL.isExecutionStatus() == false) {
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
+                List<ToDoContents> toDoContentsList = toDoContentsController.listContent(tDL.getId());
+                for (int t = 0; t < toDoContentsList.size(); t++) {
+                    ToDoContents tDC = toDoContentsList.get(t);
+
+                    if (tDC.isExecutionStatus() == true) {
+                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[❌]");
+                    } else if (tDC.isExecutionStatus() == false) {
+                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[⭕]");
+                    }
+
+                }
+            }
+        }
+    }
+
+    public void toDoList() {
+        List<ToDoList> toDoListList = toDoListService.toDoList();
+        System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
+        System.out.println("- 상세항목");
+        // 세부항목 추가 필요
+        System.out.println("==================================================");
+        for (int i = 0; i < toDoListList.size(); i++) {
+            ToDoList tDL = toDoListList.get(i);
+            if (tDL.isExecutionStatus() == true) {
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
+            } else if (tDL.isExecutionStatus() == false) {
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
+            }
         }
 
     }
 }
+

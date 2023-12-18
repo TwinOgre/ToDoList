@@ -15,9 +15,10 @@ public class ToDoContentsRepository {
                 Container.getLoginedMember().getId(), listId ,content);
         Container.getDbConnection().insert(sql);
     }
-    public List<ToDoContents> listContent() {
+    public List<ToDoContents> listContent(int id) {
         List<ToDoContents> ToDoContentsList = new ArrayList<>();
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select article.*,member.userId from article INNER JOIN `member` ON article.memberId = member.id");
+        String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d", id);
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
 
         for (Map<String, Object> row : rows) {
             ToDoContents toDoContents = new ToDoContents(row);
@@ -26,13 +27,13 @@ public class ToDoContentsRepository {
         }
         return ToDoContentsList;
     }
-    public ToDoContents ToDoContentsFindById(int id) {
-        List<ToDoContents> ToDoContentsList = this.listContent();
-        for (int i = 0; i < ToDoContentsList.size(); i++) {
-            if (id == ToDoContentsList.get(i).getId()) {
-                return ToDoContentsList.get(i);
-            }
-        }
-        return null;
-    }
+//    public ToDoContents ToDoContentsFindById(int id) {
+//        List<ToDoContents> ToDoContentsList = this.listContent();
+//        for (int i = 0; i < ToDoContentsList.size(); i++) {
+//            if (id == ToDoContentsList.get(i).getId()) {
+//                return ToDoContentsList.get(i);
+//            }
+//        }
+//        return null;
+//    }
 }
