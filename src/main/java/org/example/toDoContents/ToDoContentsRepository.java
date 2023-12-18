@@ -1,6 +1,7 @@
 package org.example.toDoContents;
 
 import org.example.Container;
+import org.example.toDoList.ToDoList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,17 @@ public class ToDoContentsRepository {
             ToDoContentsList.add(toDoContents);
         }
         return ToDoContentsList;
+    }
+
+    public ToDoContents findById(int id) {
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("SELECT * FROM toDoContents");
+        for (Map<String, Object> row : rows) {
+            ToDoContents toDoContents = new ToDoContents(row);
+            if (id == toDoContents.getListId()) {
+                return toDoContents;
+            }
+        }
+        return null;
     }
 //    public ToDoContents ToDoContentsFindById(int id) {
 //        List<ToDoContents> ToDoContentsList = this.listContent();

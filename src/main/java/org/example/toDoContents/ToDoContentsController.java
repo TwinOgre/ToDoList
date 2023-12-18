@@ -17,4 +17,7 @@ public class ToDoContentsController {
     }
 
 
+    public ToDoContents findById(int id) {
+        return toDoContentsService.findById(id);
+    }
 }

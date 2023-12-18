@@ -79,7 +79,11 @@ public class ToDoListController {
         toDoListService.modify(toDoList.getId(),title, toDoExplain);
 
         // 세부항목이 있는 지 확인
-
+        ToDoContents toDoContents = toDoContentsController.findById(modifyId);
+        if(toDoContents == null){
+            System.out.println(modifyId + "번 글이 수정되었습니다.");
+            return;
+        }
         System.out.print("상세 항목을 수정하시겠습니까?");
         String yesOrNo = Container.getScanner().nextLine().trim();
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {

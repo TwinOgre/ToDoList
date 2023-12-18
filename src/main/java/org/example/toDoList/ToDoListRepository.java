@@ -71,17 +71,6 @@ public class ToDoListRepository {
             }
         }
         return null;
-
-//        String sql = String.format("SELECT * FROM toDoList WHERE id = %d;", id);
-//        Map<String, Object> row;
-//             row = Container.getDbConnection().selectRow(sql);
-//        ToDoList toDoList = new ToDoList(row);
-//        return toDoList;
-
-
-
-
-
     }
 
     public void modify(int id, String title, String toDoExplain) {

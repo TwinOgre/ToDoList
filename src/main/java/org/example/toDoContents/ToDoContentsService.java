@@ -14,4 +14,8 @@ public class ToDoContentsService {
     public List<ToDoContents> listContent(int id) {
         return toDoContentsRepository.listContent(id);
     }
+
+    public ToDoContents findById(int id) {
+        return toDoContentsRepository.findById(id);
+    }
 }
