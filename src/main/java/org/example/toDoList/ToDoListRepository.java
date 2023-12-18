@@ -77,6 +77,11 @@ public class ToDoListRepository {
         String sql = String.format("UPDATE toDoList SET toDoTitle = '%s', toDoExplain = '%s' WHERE id = %d", title, toDoExplain, id);
         Container.getDbConnection().update(sql);
     }
+
+    public void delete(int deleteId) {
+        String sql = String.format("DELETE FROM toDoList WHERE id = %d", deleteId);
+        Container.getDbConnection().delete(sql);
+    }
 }
 //        List<ToDoList> toDoListList = this.toDoList();
 //        for (int i = 0; i < toDoListList.size(); i++) {

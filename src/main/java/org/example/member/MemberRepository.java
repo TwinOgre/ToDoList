@@ -27,4 +27,8 @@ public class MemberRepository {
         }
         return null;
     }
+
+    public void logout() {
+        Container.setLoginedMember(null);
+    }
 }

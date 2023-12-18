@@ -39,5 +39,9 @@ public class ToDoListService {
     public void modify(int id, String title, String toDoExplain) {
         toDoListRepository.modify(id, title, toDoExplain);
     }
+
+    public void delete(int deleteId) {
+        toDoListRepository.delete(deleteId);
+    }
 }
 

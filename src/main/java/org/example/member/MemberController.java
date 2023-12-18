@@ -56,4 +56,13 @@ public class MemberController {
 
         System.out.println(checkedMember.getUserId() + "님 환영합니다.");
     }
+
+    public void logout() {
+        if (Container.getLoginedMember() == null) {
+            System.out.println("로그인 중이 아닙니다.");
+            return;
+        }
+        memberService.logout();
+        System.out.println("로그아웃 되었습니다.");
+    }
 }

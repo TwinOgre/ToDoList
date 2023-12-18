@@ -179,5 +179,20 @@ public class ToDoListController {
         }
 
     }
+
+    public void delete() {
+        myList();
+        System.out.printf("삭제할 ID번호를 입력해주세요)  ");
+        int deleteId = Container.getScanner().nextInt();
+        ToDoList toDoList = toDoListService.toDoListFindById(deleteId);
+        if(toDoList == null){
+            System.out.println(deleteId + "번 글은 존재하지 않습니다.");
+            Container.getScanner().nextLine();
+            return;
+        }
+        toDoListService.delete(deleteId);
+        System.out.println(deleteId + "번 글이 삭제되었습니다.");
+        Container.getScanner().nextLine();
+    }
 }
 

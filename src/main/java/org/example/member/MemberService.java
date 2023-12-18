@@ -17,4 +17,8 @@ public class MemberService {
     public void login(Member checkedMember) {
         memberRepository.login(checkedMember);
     }
+
+    public void logout() {
+        memberRepository.logout();
+    }
 }

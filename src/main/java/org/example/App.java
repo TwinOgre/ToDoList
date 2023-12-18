@@ -33,6 +33,9 @@ public class App {
                 case "로그인":
                     memberController.login();
                     break;
+                case "로그아웃":
+                    memberController.logout();
+                    break;
                 case "등록":
                     toDoListController.create();
                     break;
@@ -40,10 +43,10 @@ public class App {
                     toDoListController.list();
                     break;
                 case "수정":
-                    // 미완
                     toDoListController.modify();
                     break;
                 case "삭제":
+                    toDoListController.delete();
                     break;
                 case "내목록":
                     toDoListController.myList();
