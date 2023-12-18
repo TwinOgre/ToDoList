@@ -30,5 +30,9 @@ public class ToDoListService {
     public List<ToDoList> toDoList() {
         return toDoListRepository.toDoList();
     }
+
+    public List<ToDoList> completeList() {
+        return toDoListRepository.completeList();
+    }
 }
 

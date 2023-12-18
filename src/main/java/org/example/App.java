@@ -40,6 +40,7 @@ public class App {
                     toDoListController.list();
                     break;
                 case "수정":
+                    // 미완
                     toDoListController.modify();
                     break;
                 case "삭제":
@@ -51,6 +52,7 @@ public class App {
                     toDoListController.toDoList();
                     break;
                 case "완료목록":
+                    toDoListController.completeList();
                     break;
                 case "완료":
                     break;

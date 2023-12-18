@@ -52,4 +52,12 @@ public class ToDoListRepository {
         }
         return toDoListList;
     }
+
+    public List<ToDoList> completeList() {
+        List<ToDoList> toDoListToDoList = new ArrayList<>();
+        String sql = String.format("SELECT * FROM toDoList WHERE memberId = %d and executionStatus = FALSE", Container.getLoginedMember().getId());
+        List<Map<String,Object>> rows = Container.getDbConnection().selectRows(sql);
+
+        return findByRows(toDoListToDoList, rows);
+    }
 }
