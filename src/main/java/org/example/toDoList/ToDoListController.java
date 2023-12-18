@@ -50,7 +50,6 @@ public class ToDoListController {
     public void list() {
         List<ToDoList> toDoListList = toDoListService.list();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
-//        System.out.println("- 상세항목");
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
