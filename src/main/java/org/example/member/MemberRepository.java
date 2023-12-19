@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MemberRepository {
     public void join(String userId, String password) {
-        String sql = String.format("INSERT INTO `member` SET userId = '%s', password = '%s', completeCount = 0, regDate = now(), updateDate = now();", userId, password);
+        String sql = String.format("INSERT INTO `member` SET userId = '%s', password = '%s', completeCount = 1, regDate = now(), updateDate = now();", userId, password);
         Container.getDbConnection().insert(sql);
     }
 

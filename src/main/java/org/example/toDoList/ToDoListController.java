@@ -174,10 +174,19 @@ public class ToDoListController {
             return;
         }
         // 먼저 세부항목이 없는 경우 완료처리✅
-        toDoListService.complete(completeId);
-        // 완료횟수 가져오고 증가.✅
-        System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 "+ Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
+        // 세부항목이 없는지 확인
+        if(toDoContentsController.findById(completeId) == null){
+            toDoListService.complete(completeId);
+            System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 "+ Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
+            Container.getScanner().nextLine();
+            return;
+        }
+        toDoContentsController.printContents(completeId);
+        System.out.println("완료할 상세 ID번호를 입렷해주세요.");
+        int completeContentsId = Container.getScanner().nextInt();
+
         Container.getScanner().nextLine();
+        // 완료횟수 가져오고 증가.✅
     }
 }
 
