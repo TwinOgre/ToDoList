@@ -9,6 +9,7 @@ public class Container {
     private static Scanner scanner;
     private static DBConnection dbConnection;
     private static Member loginedMember;
+    private static int resetByCreateId;
 
     public static Member getLoginedMember(){
         return loginedMember;
@@ -31,5 +32,11 @@ public class Container {
             dbConnection = new DBConnection();
         }
         return dbConnection;
+    }
+    public static int getResetByCreateId(){
+        return resetByCreateId;
+    }
+    public static void setResetByCreateId(int resetByCreateId1){
+        resetByCreateId = resetByCreateId1;
     }
 }

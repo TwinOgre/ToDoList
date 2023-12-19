@@ -8,13 +8,16 @@ import java.util.Map;
 
 public class ToDoContentsRepository {
 
-    public void createContent(int listId,String content) {
-
+    public void createContent(int listId, String content) {
+        int resetByCreateId = Container.getResetByCreateId();
         String sql = String.format("INSERT INTO toDoContents SET memberId = %d, listId = %d, " +
-                " content = '%s', regDate = now(), updateDate = now(), executionStatus = TRUE;",
-                Container.getLoginedMember().getId(), listId ,content);
+                        "resetByCreateId = %d, content = '%s',  regDate = now(), updateDate = now(), executionStatus = TRUE;",
+                Container.getLoginedMember().getId(), listId, resetByCreateId ,content);
         Container.getDbConnection().insert(sql);
+        resetByCreateId++;
+        Container.setResetByCreateId(resetByCreateId);
     }
+
     public List<ToDoContents> listContent(int id) {
         List<ToDoContents> ToDoContentsList = new ArrayList<>();
         String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d", id);
@@ -38,8 +41,9 @@ public class ToDoContentsRepository {
         }
         return null;
     }
-    public ToDoContents findByModifyId(int listId, int modifyId){
-        String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d",listId);
+
+    public ToDoContents findByModifyId(int listId, int modifyId) {
+        String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d", listId);
         List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
         for (Map<String, Object> row : rows) {
             ToDoContents toDoContents = new ToDoContents(row);
@@ -52,16 +56,7 @@ public class ToDoContentsRepository {
     }
 
     public void toDoContentsModify(int modifyContentId, String content) {
-        String sql = String.format("UPDATE toDoContents SET content = '%s' WHERE id = %d",content,modifyContentId);
+        String sql = String.format("UPDATE toDoContents SET content = '%s' WHERE id = %d", content, modifyContentId);
         Container.getDbConnection().update(sql);
     }
-//    public ToDoContents ToDoContentsFindById(int id) {
-//        List<ToDoContents> ToDoContentsList = this.listContent();
-//        for (int i = 0; i < ToDoContentsList.size(); i++) {
-//            if (id == ToDoContentsList.get(i).getId()) {
-//                return ToDoContentsList.get(i);
-//            }
-//        }
-//        return null;
-//    }
 }

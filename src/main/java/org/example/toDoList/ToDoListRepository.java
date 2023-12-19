@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class ToDoListRepository {
     public void create(String title, String briefDescription) {
+        Container.setResetByCreateId(1);
         String sql = String.format("INSERT INTO toDoList SET memberId = %d, toDoTitle = '%s', toDoExplain = '%s', regDate = now(), updateDate = now(), executionStatus = TRUE;", Container.getLoginedMember().getId(), title, briefDescription);
         Container.getDbConnection().insert(sql);
 

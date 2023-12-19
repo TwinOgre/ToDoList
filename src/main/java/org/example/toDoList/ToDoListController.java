@@ -30,6 +30,7 @@ public class ToDoListController {
         String yesOrNo = Container.getScanner().nextLine().trim();
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
             System.out.println("세부항목의 작성이 끝나면 \"끝\"이라고 입력해주세요.");
+
             while (true) {
                 System.out.print("세부항목: ");
                 String content = Container.getScanner().nextLine();
@@ -41,7 +42,7 @@ public class ToDoListController {
                 System.out.println("세부항목이 등록 되었습니다.");
             }
             System.out.println(title + "이(가) 등록 되었습니다.");
-        } else if (yesOrNo.equals("아니오")|| yesOrNo.equals("아니")) {
+        } else if (yesOrNo.equals("아니오") || yesOrNo.equals("아니")) {
             System.out.println(title + "이(가) 등록 되었습니다.");
         }
 
@@ -66,7 +67,7 @@ public class ToDoListController {
         System.out.printf("수정할 ID번호를 입력해주세요)  ");
         int modifyId = Container.getScanner().nextInt();
         ToDoList toDoList = toDoListService.toDoListFindById(modifyId);
-        if(toDoList == null){
+        if (toDoList == null) {
             System.out.println(modifyId + "번 글은 존재하지 않습니다.");
             Container.getScanner().nextLine();
             return;
@@ -76,11 +77,11 @@ public class ToDoListController {
         String title = Container.getScanner().nextLine();
         System.out.print("간략설명: ");
         String toDoExplain = Container.getScanner().nextLine();
-        toDoListService.modify(toDoList.getId(),title, toDoExplain);
+        toDoListService.modify(toDoList.getId(), title, toDoExplain);
 
         // 세부항목이 있는 지 확인
         ToDoContents toDoContents = toDoContentsController.findById(modifyId);
-        if(toDoContents == null){
+        if (toDoContents == null) {
             System.out.println(modifyId + "번 글이 수정되었습니다.");
             return;
         }
@@ -89,20 +90,16 @@ public class ToDoListController {
 
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
             List<ToDoContents> toDoContentsList = toDoContentsController.listContent(modifyId);
-            for(int i = 0; i < toDoContentsList.size(); i++){
-                int modifyContentId =  toDoContentsList.get(i).getId();
+            for (int i = 0; i < toDoContentsList.size(); i++) {
+                int modifyContentId = toDoContentsList.get(i).getId();
                 System.out.print("세부항목: ");
                 String content = Container.getScanner().nextLine();
-                toDoContentsController.toDoContentsModify(modifyContentId,content);
+                toDoContentsController.toDoContentsModify(modifyContentId, content);
             }
             System.out.println(modifyId + "번 글이 수정되었습니다.");
-        } else if (yesOrNo.equals("아니오")|| yesOrNo.equals("아니")) {
+        } else if (yesOrNo.equals("아니오") || yesOrNo.equals("아니")) {
             System.out.println(modifyId + "번 글이 수정되었습니다.");
         }
-
-
-
-
     }
 
     public void myList() {
@@ -119,9 +116,9 @@ public class ToDoListController {
                 for (int t = 0; t < toDoContentsList.size(); t++) {
                     ToDoContents tDC = toDoContentsList.get(t);
                     if (tDC.isExecutionStatus() == true) {
-                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[❌]");
+                        System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[❌]");
                     } else if (tDC.isExecutionStatus() == false) {
-                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[⭕]");
+                        System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[⭕]");
                     }
                 }
             } else if (tDL.isExecutionStatus() == false) {
@@ -177,7 +174,6 @@ public class ToDoListController {
                 }
             }
         }
-
     }
 
     public void delete() {
@@ -185,7 +181,7 @@ public class ToDoListController {
         System.out.printf("삭제할 ID번호를 입력해주세요)  ");
         int deleteId = Container.getScanner().nextInt();
         ToDoList toDoList = toDoListService.toDoListFindById(deleteId);
-        if(toDoList == null){
+        if (toDoList == null) {
             System.out.println(deleteId + "번 글은 존재하지 않습니다.");
             Container.getScanner().nextLine();
             return;
