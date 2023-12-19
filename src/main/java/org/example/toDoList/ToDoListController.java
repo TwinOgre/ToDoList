@@ -30,6 +30,7 @@ public class ToDoListController {
         toDoListService.create(title, briefDescription);
         // 지금 만든 글 호출
         // 문제❗ : 제목이 같은 글이 중복된 경우 상세항목이 원하지 않는 글에 추가됨.
+        // 제목과 간략설명이 함께 매개변수로 들어가는 메서드 만들어보기.
         ToDoList toDoList = toDoListService.memberFindByTitle(title);
 
         System.out.print("상세 항목을 작성하시겠습니까?");
@@ -55,6 +56,7 @@ public class ToDoListController {
     }
 
     public void list() {
+        memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.list();
         System.out.println("실행여부 / id / 제목 / 간략설명 / 등록일 / 수정일 / ");
         System.out.println("==================================================");
@@ -69,6 +71,7 @@ public class ToDoListController {
     }
 
     public void modify() {
+        memberController.loginCheck();
         myList();
         System.out.printf("수정할 ID번호를 입력해주세요)  ");
         int modifyId = Container.getScanner().nextInt();
@@ -109,6 +112,7 @@ public class ToDoListController {
     }
 
     public void myList() {
+        memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.myList();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
@@ -127,6 +131,7 @@ public class ToDoListController {
     }
 
     public void toDoList() {
+        memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.toDoList();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
@@ -139,6 +144,7 @@ public class ToDoListController {
     }
 
     public void completeList() {
+        memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.completeList();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
@@ -151,6 +157,7 @@ public class ToDoListController {
     }
 
     public void delete() {
+        memberController.loginCheck();
         myList();
         System.out.printf("삭제할 ID번호를 입력해주세요)  ");
         int deleteId = Container.getScanner().nextInt();
@@ -165,8 +172,12 @@ public class ToDoListController {
         Container.getScanner().nextLine();
     }
 
+    //완료 문제1: 완료처리를 할 할일목록이 없어도 진행됨 >> a.내목록들 executionStatus 확인 b.
+    //     문제2: 완료했던 번호 입력해도 완료 진행된걸로 판정되어 완료횟수 올라감.(처리완료)✅
     public void complete() {
+        memberController.loginCheck();
         toDoList();
+
         System.out.printf("완료할 ID번호를 입력해주세요)  ");
         int completeId = 0;
         try {
@@ -180,6 +191,10 @@ public class ToDoListController {
         ToDoList toDoList = toDoListService.toDoListFindByIdAndUserId(Container.getLoginedMember().getId(), completeId);
         if (toDoList == null) {
             System.out.println(completeId + "번 글은 존재하지 않습니다.");
+            Container.getScanner().nextLine();
+            return;
+        } else if(toDoList.isExecutionStatus() == false){
+            System.out.println(completeId + "번 글은 이미 완료된 상태입니다.");
             Container.getScanner().nextLine();
             return;
         }

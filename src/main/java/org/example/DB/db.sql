@@ -1,12 +1,12 @@
 DROP DATABASE projectToDo;
 CREATE DATABASE projectToDo;
 USE projectToDo;
-
+DROP TABLE `member`;
 CREATE TABLE `member`(
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	userId varChar(100) NOT NULL UNIQUE,
 	`password` varChar(100) NOT NULL,
-	successCount int UNSIGNED NOT NULL,
+	completeCount int UNSIGNED NOT NULL,
 	regDate dateTime NOT NULL,
 	updateDate dateTime NOT NULL
 );
@@ -36,7 +36,7 @@ SELECT * FROM `member`;
 SELECT * FROM toDoList;
 SELECT * FROM toDoContents;
 
-INSERT INTO `member` SET userId = 'user1', password = '1234', successCount = 0, regDate = now(), updateDate = now();
+INSERT INTO `member` SET userId = 'user1', password = '1234', completeCount = 1, regDate = now(), updateDate = now();
 
 INSERT INTO toDoList SET memberId = 1, toDoTitle = 'testcomplete', toDoExplain = 'test0100', regDate = now(), updateDate = now(), executionStatus = false;
 INSERT INTO toDoList SET memberId = 2, toDoTitle = 'test02', toDoExplain = 'test0200', regDate = now(), updateDate = now(), executionStatus = false;
@@ -57,7 +57,10 @@ WHERE id = 1;
 SELECT * FROM toDoList WHERE id = 1;
 SELECT * FROM toDoContents WHERE listId = 1 AND id = 1;
 SELECT * FROM toDoContents WHERE listId = %d AND id = %d;
-
+SELECT * FROM toDoContents WHERE listId = 1;
 
 UPDATE toDoContents SET content = '%s' WHERE id = %d;
 UPDATE toDoContents SET executionStatus = FALSE WHERE listId = 3 AND resetByCreateId =5;
+UPDATE toDoList SET executionStatus = FALSE WHERE id = 1;
+UPDATE `member` SET completeCount = 1 WHERE id = 1;
+UPDATE toDoContents SET ex

@@ -72,6 +72,7 @@ public class MemberController {
     public void loginCheck(){
         if(Container.getLoginedMember() == null){
             System.out.println("로그인 해 주세요");
+            this.login();
             return;
         }
     }
