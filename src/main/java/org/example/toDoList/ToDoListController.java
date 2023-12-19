@@ -112,26 +112,11 @@ public class ToDoListController {
             ToDoList tDL = toDoListList.get(i);
             if (tDL.isExecutionStatus() == true) {
                 System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
-                List<ToDoContents> toDoContentsList = toDoContentsController.listContent(tDL.getId());
-                for (int t = 0; t < toDoContentsList.size(); t++) {
-                    ToDoContents tDC = toDoContentsList.get(t);
-                    if (tDC.isExecutionStatus() == true) {
-                        System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[❌]");
-                    } else if (tDC.isExecutionStatus() == false) {
-                        System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[⭕]");
-                    }
-                }
+                toDoContentsController.printContents(tDL.getId());
+
             } else if (tDL.isExecutionStatus() == false) {
                 System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
-                List<ToDoContents> toDoContentsList = toDoContentsController.listContent(tDL.getId());
-                for (int t = 0; t < toDoContentsList.size(); t++) {
-                    ToDoContents tDC = toDoContentsList.get(t);
-                    if (tDC.isExecutionStatus() == true) {
-                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[❌]");
-                    } else if (tDC.isExecutionStatus() == false) {
-                        System.out.printf("    - %s  %s\n", tDC.getContent(), "[⭕]");
-                    }
-                }
+                toDoContentsController.printContents(tDL.getId());
             }
         }
     }
@@ -144,15 +129,7 @@ public class ToDoListController {
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
-            List<ToDoContents> toDoContentsList = toDoContentsController.listContent(tDL.getId());
-            for (int t = 0; t < toDoContentsList.size(); t++) {
-                ToDoContents tDC = toDoContentsList.get(t);
-                if (tDC.isExecutionStatus() == true) {
-                    System.out.printf("    - %s  %s\n", tDC.getContent(), "[❌]");
-                } else if (tDC.isExecutionStatus() == false) {
-                    System.out.printf("    - %s  %s\n", tDC.getContent(), "[⭕]");
-                }
-            }
+            toDoContentsController.printContents(tDL.getId());
         }
     }
 
@@ -164,15 +141,7 @@ public class ToDoListController {
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
-            List<ToDoContents> toDoContentsList = toDoContentsController.listContent(tDL.getId());
-            for (int t = 0; t < toDoContentsList.size(); t++) {
-                ToDoContents tDC = toDoContentsList.get(t);
-                if (tDC.isExecutionStatus() == true) {
-                    System.out.printf("    - %s  %s\n", tDC.getContent(), "[❌]");
-                } else if (tDC.isExecutionStatus() == false) {
-                    System.out.printf("    - %s  %s\n", tDC.getContent(), "[⭕]");
-                }
-            }
+            toDoContentsController.printContents(tDL.getId());
         }
     }
 

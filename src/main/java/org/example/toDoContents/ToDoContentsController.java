@@ -26,4 +26,15 @@ public class ToDoContentsController {
     public void toDoContentsModify(int modifyContentId, String content){
          toDoContentsService.toDoContentsModify(modifyContentId, content);
     }
+    public void printContents(int toDoListId){
+        List<ToDoContents> toDoContentsList = this.listContent(toDoListId);
+        for (int t = 0; t < toDoContentsList.size(); t++) {
+            ToDoContents tDC = toDoContentsList.get(t);
+            if (tDC.isExecutionStatus() == true) {
+                System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[❌]");
+            } else if (tDC.isExecutionStatus() == false) {
+                System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[⭕]");
+            }
+        }
+    }
 }
