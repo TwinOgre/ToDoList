@@ -31,9 +31,9 @@ public class ToDoContentsController {
         for (int t = 0; t < toDoContentsList.size(); t++) {
             ToDoContents tDC = toDoContentsList.get(t);
             if (tDC.isExecutionStatus() == true) {
-                System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[❌]");
+                System.out.printf("    %s  %d.  %s\n","[❌]", tDC.getResetByCreateId(), tDC.getContent() );
             } else if (tDC.isExecutionStatus() == false) {
-                System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[✅]");
+                System.out.printf("    %s  %d.  %s\n", "[✅]", tDC.getResetByCreateId(), tDC.getContent());
             }
         }
     }

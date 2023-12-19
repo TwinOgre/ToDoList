@@ -6,6 +6,7 @@ import org.example.toDoContents.ToDoContents;
 import org.example.toDoContents.ToDoContentsController;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class ToDoListController {
@@ -27,6 +28,7 @@ public class ToDoListController {
 
         toDoListService.create(title, briefDescription);
         // 지금 만든 글 호출
+        // 문제❗ : 제목이 같은 글이 중복된 경우 상세항목이 원하지 않는 글에 추가됨.
         ToDoList toDoList = toDoListService.memberFindByTitle(title);
 
         System.out.print("상세 항목을 작성하시겠습니까?");
@@ -38,7 +40,7 @@ public class ToDoListController {
                 System.out.print("세부항목: ");
                 String content = Container.getScanner().nextLine();
                 int listId = toDoList.getId();
-                if (content.equals("끝")) {
+                if (content.equals("끝") || content.equals("끝 ") || content.equals(" 끝")) {
                     break;
                 }
                 toDoContentsController.createContent(listId, content);
@@ -53,14 +55,14 @@ public class ToDoListController {
 
     public void list() {
         List<ToDoList> toDoListList = toDoListService.list();
-        System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
+        System.out.println("실행여부 / id / 제목 / 간략설명 / 등록일 / 수정일 / ");
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             if (tDL.isExecutionStatus() == true) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
+                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[✅]");
+                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
             }
         }
     }
@@ -109,16 +111,15 @@ public class ToDoListController {
         List<ToDoList> toDoListList = toDoListService.myList();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
-        // 세부항목 추가 필요
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             if (tDL.isExecutionStatus() == true) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
+                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
                 toDoContentsController.printContents(tDL.getId());
 
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[✅]");
+                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
                 toDoContentsController.printContents(tDL.getId());
             }
         }
@@ -131,7 +132,7 @@ public class ToDoListController {
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
-            System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
+            System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
             toDoContentsController.printContents(tDL.getId());
         }
     }
@@ -143,7 +144,7 @@ public class ToDoListController {
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
-            System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[✅]");
+            System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
             toDoContentsController.printContents(tDL.getId());
         }
     }
@@ -166,8 +167,16 @@ public class ToDoListController {
     public void complete() {
         toDoList();
         System.out.printf("완료할 ID번호를 입력해주세요)  ");
-        int completeId = Container.getScanner().nextInt();
-        ToDoList toDoList = toDoListService.toDoListFindById(completeId);
+        int completeId = 0;
+        try {
+            completeId = Container.getScanner().nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("정수만 입력해주세요.");
+            Container.getScanner().nextLine();
+            return;
+        }
+
+        ToDoList toDoList = toDoListService.toDoListFindByIdAndUserId(Container.getLoginedMember().getId(), completeId);
         if (toDoList == null) {
             System.out.println(completeId + "번 글은 존재하지 않습니다.");
             Container.getScanner().nextLine();
@@ -184,14 +193,13 @@ public class ToDoListController {
         while (true) {
             // 상세항목이 전부 완료처리 되면 원글 완료처리후 종료(return)하기.
             List<ToDoContents> toDoContentsList = toDoContentsController.listContent(completeId);
-            for(int i = 0; i < toDoContentsList.size(); i++){
-                if(toDoContentsList.get(i).isExecutionStatus() == true){
+            for (int i = 0; i < toDoContentsList.size(); i++) {
+                if (toDoContentsList.get(i).isExecutionStatus() == true) {
                     break;
-                }
-                else if(toDoContentsList.get(toDoContentsList.size()-1) == toDoContentsList.get(i) && toDoContentsList.get(i).isExecutionStatus() == false){
+                } else if (toDoContentsList.get(toDoContentsList.size() - 1) == toDoContentsList.get(i) && toDoContentsList.get(i).isExecutionStatus() == false) {
                     toDoListService.complete(completeId);
                     System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 " + Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
-                    Container.getScanner().nextLine();
+
                     return;
                 }
 

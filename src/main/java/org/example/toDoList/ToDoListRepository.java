@@ -11,9 +11,10 @@ import java.util.Map;
 public class ToDoListRepository {
     MemberController memberController;
 
-    public ToDoListRepository(){
+    public ToDoListRepository() {
         memberController = new MemberController();
     }
+
     public void create(String title, String briefDescription) {
         Container.setResetByCreateId(1);
         String sql = String.format("INSERT INTO toDoList SET memberId = %d, toDoTitle = '%s', toDoExplain = '%s', regDate = now(), updateDate = now(), executionStatus = TRUE;", Container.getLoginedMember().getId(), title, briefDescription);
@@ -81,6 +82,19 @@ public class ToDoListRepository {
         return null;
     }
 
+    // 로그인한 유저의 ToDoList 찾기(고유ID와 userId둘다 받기)
+    public ToDoList toDoListFindByIdAndUserId(int memberId, int id) {
+        String sql = String.format("SELECT * FROM toDoList WHERE memberId = %d", memberId);
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
+        for (Map<String, Object> row : rows) {
+            ToDoList toDoList = new ToDoList(row);
+            if (id == toDoList.getId()) {
+                return toDoList;
+            }
+        }
+        return null;
+    }
+
     public void modify(int id, String title, String toDoExplain) {
         String sql = String.format("UPDATE toDoList SET toDoTitle = '%s', toDoExplain = '%s' WHERE id = %d", title, toDoExplain, id);
         Container.getDbConnection().update(sql);
@@ -98,7 +112,7 @@ public class ToDoListRepository {
         String sql = String.format("UPDATE toDoList SET executionStatus = FALSE WHERE id = %d", completeId);
         Container.getDbConnection().update(sql);
 
-        String sqlForCountPlus = String.format("UPDATE `member` SET completeCount = %d WHERE id = %d",completeCount,member.getId());
+        String sqlForCountPlus = String.format("UPDATE `member` SET completeCount = %d WHERE id = %d", completeCount, member.getId());
         Container.getDbConnection().update(sqlForCountPlus);
         Container.setLoginedMember(member);
     }

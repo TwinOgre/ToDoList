@@ -47,5 +47,8 @@ public class ToDoListService {
     public void complete(int completeId) {
         toDoListRepository.complete(completeId);
     }
+    public ToDoList toDoListFindByIdAndUserId(int memberId, int id){
+        return toDoListRepository.toDoListFindByIdAndUserId(memberId,id);
+    }
 }
 
