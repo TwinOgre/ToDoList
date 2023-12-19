@@ -41,6 +41,17 @@ public class ToDoContentsRepository {
         }
         return null;
     }
+    public ToDoContents findByListIdAndResetId(int listId, int resetByListId){
+        String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d",listId);
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
+        for (Map<String, Object> row : rows) {
+            ToDoContents toDoContents = new ToDoContents(row);
+            if (resetByListId == toDoContents.getResetByCreateId()) {
+                return toDoContents;
+            }
+        }
+        return null;
+    }
 
     public ToDoContents findByModifyId(int listId, int modifyId) {
         String sql = String.format("SELECT * FROM toDoContents WHERE listId = %d", listId);
@@ -57,6 +68,11 @@ public class ToDoContentsRepository {
 
     public void toDoContentsModify(int modifyContentId, String content) {
         String sql = String.format("UPDATE toDoContents SET content = '%s' WHERE id = %d", content, modifyContentId);
+        Container.getDbConnection().update(sql);
+    }
+
+    public void completeContent(int listId , int resetByListId) {
+        String sql = String.format("UPDATE toDoContents SET executionStatus = FALSE WHERE listId = %d AND resetByCreateId =%d;",listId,resetByListId);
         Container.getDbConnection().update(sql);
     }
 }

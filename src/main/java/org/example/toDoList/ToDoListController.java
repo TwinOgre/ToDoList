@@ -60,7 +60,7 @@ public class ToDoListController {
             if (tDL.isExecutionStatus() == true) {
                 System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[❌]");
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[✅]");
             }
         }
     }
@@ -118,7 +118,7 @@ public class ToDoListController {
                 toDoContentsController.printContents(tDL.getId());
 
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
+                System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[✅]");
                 toDoContentsController.printContents(tDL.getId());
             }
         }
@@ -143,7 +143,7 @@ public class ToDoListController {
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
-            System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[⭕]");
+            System.out.printf("%d  %s  %s  %s  %s  %s\n", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate(), "[✅]");
             toDoContentsController.printContents(tDL.getId());
         }
     }
@@ -174,19 +174,50 @@ public class ToDoListController {
             return;
         }
         // 먼저 세부항목이 없는 경우 완료처리✅
-        // 세부항목이 없는지 확인
-        if(toDoContentsController.findById(completeId) == null){
+        // 세부항목이 없는지 확인✅
+        if (toDoContentsController.findById(completeId) == null) {
             toDoListService.complete(completeId);
-            System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 "+ Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
+            System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 " + Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
             Container.getScanner().nextLine();
             return;
         }
-        toDoContentsController.printContents(completeId);
-        System.out.println("완료할 상세 ID번호를 입렷해주세요.");
-        int completeContentsId = Container.getScanner().nextInt();
+        while (true) {
+            // 상세항목이 전부 완료처리 되면 원글 완료처리후 종료(return)하기.
+            List<ToDoContents> toDoContentsList = toDoContentsController.listContent(completeId);
+            for(int i = 0; i < toDoContentsList.size(); i++){
+                if(toDoContentsList.get(i).isExecutionStatus() == true){
+                    break;
+                }
+                else if(toDoContentsList.get(toDoContentsList.size()-1) == toDoContentsList.get(i) && toDoContentsList.get(i).isExecutionStatus() == false){
+                    toDoListService.complete(completeId);
+                    System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 " + Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
+                    Container.getScanner().nextLine();
+                    return;
+                }
 
-        Container.getScanner().nextLine();
-        // 완료횟수 가져오고 증가.✅
+            }
+            toDoContentsController.printContents(completeId);
+            System.out.println("상세항목 완료를 중단하고 싶다면 \'-1\'을 입력해주세요.");
+            System.out.print("완료할 상세 ID번호를 입력해주세요) ");
+
+            int completeContentsId = Container.getScanner().nextInt();
+            if (completeContentsId == -1) {
+                System.out.println("완료처리를 중단합니다.");
+                Container.getScanner().nextLine();
+                return;
+            }
+            // 완료된 상세항목 접근시 다시 입력하게 하기.
+            ToDoContents toDoContents = toDoContentsController.findByListIdAndResetId(completeId, completeContentsId);
+            if (toDoContents.isExecutionStatus() == false) {
+                System.out.println(completeContentsId + "번 상세항목은 이미 완료되었습니다.");
+                Container.getScanner().nextLine();
+                continue;
+            }
+            toDoContentsController.completeContent(completeId, completeContentsId);
+            System.out.println(completeId + "번 글의 " + completeContentsId + "번 상세항목이 완료되었습니다.");
+            Container.getScanner().nextLine();
+        }
+
     }
 }
 

@@ -33,8 +33,15 @@ public class ToDoContentsController {
             if (tDC.isExecutionStatus() == true) {
                 System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[❌]");
             } else if (tDC.isExecutionStatus() == false) {
-                System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[⭕]");
+                System.out.printf("    %d. %s  %s\n",tDC.getResetByCreateId(), tDC.getContent(), "[✅]");
             }
         }
+    }
+
+    public void completeContent(int listId, int resetByListId) {
+        toDoContentsService.completeContent(listId, resetByListId);
+    }
+    public ToDoContents findByListIdAndResetId(int listId, int resetByListId){
+        return toDoContentsService.findByListIdAndResetId(listId, resetByListId);
     }
 }
