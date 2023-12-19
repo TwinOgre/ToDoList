@@ -60,3 +60,4 @@ SELECT * FROM toDoContents WHERE listId = %d AND id = %d;
 
 
 UPDATE toDoContents SET content = '%s' WHERE id = %d;
+UPDATE toDoContents SET executionStatus = FALSE WHERE listId = 3 AND resetByCreateId =5;

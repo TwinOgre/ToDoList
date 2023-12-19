@@ -58,6 +58,7 @@ public class App {
                     toDoListController.completeList();
                     break;
                 case "완료":
+                    toDoListController.complete();
                     break;
             }
         }

@@ -1,12 +1,19 @@
 package org.example.toDoList;
 
 import org.example.Container;
+import org.example.member.Member;
+import org.example.member.MemberController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ToDoListRepository {
+    MemberController memberController;
+
+    public ToDoListRepository(){
+        memberController = new MemberController();
+    }
     public void create(String title, String briefDescription) {
         Container.setResetByCreateId(1);
         String sql = String.format("INSERT INTO toDoList SET memberId = %d, toDoTitle = '%s', toDoExplain = '%s', regDate = now(), updateDate = now(), executionStatus = TRUE;", Container.getLoginedMember().getId(), title, briefDescription);
@@ -83,11 +90,16 @@ public class ToDoListRepository {
         String sql = String.format("DELETE FROM toDoList WHERE id = %d", deleteId);
         Container.getDbConnection().delete(sql);
     }
+
+    public void complete(int completeId) {
+        Member member = memberController.memberFindById(Container.getLoginedMember().getId());
+        int completeCount = member.getCompleteCount();
+        completeCount++;
+        String sql = String.format("UPDATE toDoList SET executionStatus = FALSE WHERE id = %d", completeId);
+        Container.getDbConnection().update(sql);
+
+        String sqlForCountPlus = String.format("UPDATE `member` SET completeCount = %d WHERE id = %d",completeCount,member.getId());
+        Container.getDbConnection().update(sqlForCountPlus);
+        Container.setLoginedMember(member);
+    }
 }
-//        List<ToDoList> toDoListList = this.toDoList();
-//        for (int i = 0; i < toDoListList.size(); i++) {
-//            if (id == toDoListList.get(i).getId()) {
-//                return toDoListList.get(i);
-//            }
-//        }
-//        return null;

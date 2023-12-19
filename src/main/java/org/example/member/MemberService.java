@@ -21,4 +21,8 @@ public class MemberService {
     public void logout() {
         memberRepository.logout();
     }
+
+    public Member memberFindById(int id) {
+        return memberRepository.memberFindById(id);
+    }
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 @Getter
 public class Member {
     private int id;
-    private int successCount;
+    private int completeCount;
     private String userId;
     private String password;
     private String regDate;
@@ -18,6 +18,7 @@ public class Member {
     public Member(Map<String, Object> row) {
         this.id = (int) row.get("id");
         this.userId = (String) row.get("userId");
+        this.completeCount = (int) row.get("completeCount");
         this.password = (String) row.get("password");
         this.regDate = row.get("regDate").toString();
         this.updateDate = row.get("updateDate").toString();

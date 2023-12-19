@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MemberRepository {
     public void join(String userId, String password) {
-        String sql = String.format("INSERT INTO `member` SET userId = '%s', password = '%s', successCount = 0, regDate = now(), updateDate = now();", userId, password);
+        String sql = String.format("INSERT INTO `member` SET userId = '%s', password = '%s', completeCount = 0, regDate = now(), updateDate = now();", userId, password);
         Container.getDbConnection().insert(sql);
     }
 
@@ -30,5 +30,16 @@ public class MemberRepository {
 
     public void logout() {
         Container.setLoginedMember(null);
+    }
+
+    public Member memberFindById(int id) {
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from `member`");
+        for (Map<String, Object> row : rows) {
+            Member member = new Member(row);
+            if (id == member.getId()) {
+                return member;
+            }
+        }
+        return null;
     }
 }

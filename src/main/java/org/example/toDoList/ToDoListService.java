@@ -43,5 +43,9 @@ public class ToDoListService {
     public void delete(int deleteId) {
         toDoListRepository.delete(deleteId);
     }
+
+    public void complete(int completeId) {
+        toDoListRepository.complete(completeId);
+    }
 }
 

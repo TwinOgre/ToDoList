@@ -1,6 +1,7 @@
 package org.example.toDoList;
 
 import org.example.Container;
+import org.example.member.MemberController;
 import org.example.toDoContents.ToDoContents;
 import org.example.toDoContents.ToDoContentsController;
 
@@ -10,10 +11,12 @@ import java.util.List;
 public class ToDoListController {
     ToDoListService toDoListService;
     ToDoContentsController toDoContentsController;
+    MemberController memberController;
 
     public ToDoListController() {
         toDoListService = new ToDoListService();
         toDoContentsController = new ToDoContentsController();
+        memberController = new MemberController();
     }
 
     public void create() {
@@ -157,6 +160,23 @@ public class ToDoListController {
         }
         toDoListService.delete(deleteId);
         System.out.println(deleteId + "번 글이 삭제되었습니다.");
+        Container.getScanner().nextLine();
+    }
+
+    public void complete() {
+        toDoList();
+        System.out.printf("완료할 ID번호를 입력해주세요)  ");
+        int completeId = Container.getScanner().nextInt();
+        ToDoList toDoList = toDoListService.toDoListFindById(completeId);
+        if (toDoList == null) {
+            System.out.println(completeId + "번 글은 존재하지 않습니다.");
+            Container.getScanner().nextLine();
+            return;
+        }
+        // 먼저 세부항목이 없는 경우 완료처리✅
+        toDoListService.complete(completeId);
+        // 완료횟수 가져오고 증가.✅
+        System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 "+ Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
         Container.getScanner().nextLine();
     }
 }
