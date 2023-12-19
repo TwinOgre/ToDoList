@@ -114,6 +114,7 @@ public class ToDoListController {
     public void myList() {
         memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.myList();
+
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
         System.out.println("==================================================");
@@ -133,6 +134,10 @@ public class ToDoListController {
     public void toDoList() {
         memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.toDoList();
+//        if(toDoListList == null){
+//            System.out.println("내 할일목록이 없습니다.");
+//            return;
+//        }
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
         System.out.println("==================================================");
@@ -172,7 +177,7 @@ public class ToDoListController {
         Container.getScanner().nextLine();
     }
 
-    //완료 문제1: 완료처리를 할 할일목록이 없어도 진행됨 >> a.내목록들 executionStatus 확인 b.
+    //완료 문제1: 완료 처리를 할 할일목록이 없어도 진행됨 >> a.내목록들 executionStatus 확인 b.
     //     문제2: 완료했던 번호 입력해도 완료 진행된걸로 판정되어 완료횟수 올라감.(처리완료)✅
     public void complete() {
         memberController.loginCheck();

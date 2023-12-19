@@ -49,6 +49,7 @@ public class ToDoListRepository {
 
     public List<ToDoList> toDoList() {
         List<ToDoList> toDoListToDoList = new ArrayList<>();
+
         String sql = String.format("SELECT * FROM toDoList WHERE memberId = %d and executionStatus = TRUE", Container.getLoginedMember().getId());
         List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
 
