@@ -21,6 +21,7 @@ public class ToDoListController {
     }
 
     public void create() {
+        memberController.loginCheck();
         System.out.print("제목: ");
         String title = Container.getScanner().nextLine();
         System.out.print("간략설명: ");

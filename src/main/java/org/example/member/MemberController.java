@@ -65,7 +65,14 @@ public class MemberController {
         memberService.logout();
         System.out.println("로그아웃 되었습니다.");
     }
-    public Member memberFindById(int id){
+
+    public Member memberFindById(int id) {
         return memberService.memberFindById(id);
+    }
+    public void loginCheck(){
+        if(Container.getLoginedMember() == null){
+            System.out.println("로그인 해 주세요");
+            return;
+        }
     }
 }
