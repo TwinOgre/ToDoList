@@ -22,8 +22,9 @@ public class ToDoListRepository {
 
     }
 
-    public ToDoList toDoListFindByTitle(String title) {
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from `toDoList`");
+    public ToDoList toDoListFindByTitleAndExplain(String title,String explain) {
+        String sql = String.format("SELECT * FROM toDoList WHERE toDoExplain = '%s' ", explain);
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows(sql);
         for (Map<String, Object> row : rows) {
             ToDoList toDoList = new ToDoList(row);
             if (title.equals(toDoList.getToDoTitle())) {

@@ -28,10 +28,7 @@ public class ToDoListController {
         String briefDescription = Container.getScanner().nextLine();
 
         toDoListService.create(title, briefDescription);
-        // 지금 만든 글 호출
-        // 문제❗ : 제목이 같은 글이 중복된 경우 상세항목이 원하지 않는 글에 추가됨.
-        // 제목과 간략설명이 함께 매개변수로 들어가는 메서드 만들어보기.
-        ToDoList toDoList = toDoListService.memberFindByTitle(title);
+        ToDoList toDoList = toDoListService.memberFindByTitle(title,briefDescription);
 
         System.out.print("상세 항목을 작성하시겠습니까?");
         String yesOrNo = Container.getScanner().nextLine().trim();
@@ -92,7 +89,6 @@ public class ToDoListController {
         String toDoExplain = Container.getScanner().nextLine();
         toDoListService.modify(toDoList.getId(), title, toDoExplain);
 
-        // 세부항목이 있는 지 확인
         ToDoContents toDoContents = toDoContentsService.findById(modifyId);
         if (toDoContents == null) {
             System.out.println(modifyId + "번 글이 수정되었습니다.");
@@ -136,10 +132,10 @@ public class ToDoListController {
     public void toDoList() {
         memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.toDoList();
-//        if(toDoListList == null){
-//            System.out.println("내 할일목록이 없습니다.");
-//            return;
-//        }
+        if(toDoListList.size() == 0){
+            System.out.println("내 할일목록이 없습니다.");
+            return;
+        }
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
         System.out.println("==================================================");
@@ -177,8 +173,6 @@ public class ToDoListController {
         Container.getScanner().nextLine();
     }
 
-    //완료 문제1: 완료 처리를 할 할일목록이 없어도 진행됨 >> a.내목록들 executionStatus 확인 b.
-    //     문제2: 완료했던 번호 입력해도 완료 진행된걸로 판정되어 완료횟수 올라감.(처리완료)✅
     public void complete() {
         memberController.loginCheck();
         toDoList();
