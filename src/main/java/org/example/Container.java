@@ -12,6 +12,7 @@ public class Container {
     private static DBConnection dbConnection;
     private static Member loginedMember;
     private static int resetByCreateId;
+    private static boolean tryFlag;
 
     public static Member getLoginedMember(){
         return loginedMember;
@@ -48,4 +49,11 @@ public class Container {
 
         return formattedDate;
     }
+    public static boolean isTryFlag(){
+        return tryFlag;
+    }
+    public static void setTryFlag(boolean tryFlag1){
+        tryFlag = tryFlag1;
+    }
+
 }

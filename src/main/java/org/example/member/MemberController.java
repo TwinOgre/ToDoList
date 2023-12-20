@@ -72,10 +72,11 @@ public class MemberController {
         return memberService.memberFindById(id);
     }
     public void loginCheck(){
+        Container.setTryFlag(false);
         if(Container.getLoginedMember() == null){
-            System.out.println("로그인 해 주세요");
-            this.login();
+            System.out.println("❗ 먼저 로그인 해 주세요");
             return;
         }
+        Container.setTryFlag(true);
     }
 }

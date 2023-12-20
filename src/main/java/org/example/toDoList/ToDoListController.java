@@ -130,6 +130,7 @@ public class ToDoListController {
     }
 
     public void toDoList() {
+        Container.setTryFlag(false);
         memberController.loginCheck();
         List<ToDoList> toDoListList = toDoListService.toDoList();
         if(toDoListList.size() == 0){
@@ -143,6 +144,7 @@ public class ToDoListController {
             ToDoList tDL = toDoListList.get(i);
             this.inCompleteListPrinter(tDL);
         }
+        Container.setTryFlag(true);
     }
 
     public void completeList() {
@@ -159,6 +161,9 @@ public class ToDoListController {
 
     public void delete() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         myList();
         System.out.printf("삭제할 ID번호를 입력해주세요)  ");
         int deleteId = Container.getScanner().nextInt();
@@ -175,7 +180,13 @@ public class ToDoListController {
 
     public void complete() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         toDoList();
+        if(Container.isTryFlag() == false){
+            return;
+        }
 
         System.out.printf("완료할 ID번호를 입력해주세요)  ");
         int completeId = 0;
