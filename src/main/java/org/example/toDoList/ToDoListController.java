@@ -22,6 +22,9 @@ public class ToDoListController {
 
     public void create() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         System.out.print("제목: ");
         String title = Container.getScanner().nextLine();
         System.out.print("간략설명: ");
@@ -54,6 +57,9 @@ public class ToDoListController {
 
     public void list() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         List<ToDoList> toDoListList = toDoListService.list();
         System.out.println("실행여부 / id / 제목 / 간략설명 / 등록일 / 수정일 / ");
         System.out.println("==================================================");
@@ -73,6 +79,9 @@ public class ToDoListController {
 
     public void modify() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         myList();
         System.out.printf("수정할 ID번호를 입력해주세요)  ");
         int modifyId = Container.getScanner().nextInt();
@@ -113,6 +122,9 @@ public class ToDoListController {
 
     public void myList() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         List<ToDoList> toDoListList = toDoListService.myList();
 
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
@@ -130,8 +142,11 @@ public class ToDoListController {
     }
 
     public void toDoList() {
-        Container.setTryFlag(false);
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
+        Container.setTryFlag(false);
         List<ToDoList> toDoListList = toDoListService.toDoList();
         if(toDoListList.size() == 0){
             System.out.println("내 할일목록이 없습니다.");
@@ -149,6 +164,9 @@ public class ToDoListController {
 
     public void completeList() {
         memberController.loginCheck();
+        if(Container.isTryFlag() == false){
+            return;
+        }
         List<ToDoList> toDoListList = toDoListService.completeList();
         System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
         System.out.println("- 상세항목");
