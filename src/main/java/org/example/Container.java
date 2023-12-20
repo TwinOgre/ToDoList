@@ -3,6 +3,8 @@ package org.example;
 import org.example.DB.DBConnection;
 import org.example.member.Member;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Container {
@@ -38,5 +40,12 @@ public class Container {
     }
     public static void setResetByCreateId(int resetByCreateId1){
         resetByCreateId = resetByCreateId1;
+    }
+    public static String formatDate(LocalDateTime dateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String formattedDate = dateTime.format(formatter);
+
+        return formattedDate;
     }
 }

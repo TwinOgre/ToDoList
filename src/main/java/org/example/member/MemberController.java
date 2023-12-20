@@ -26,16 +26,18 @@ public class MemberController {
                 System.out.println("비밀번호가 일치하지 않습니다.");
             }
         }
+        login();
     }
 
     public void login() {
+
         if (Container.getLoginedMember() != null) {
             System.out.println("현재 로그인 상태입니다.");
             return;
         }
 
         Member checkedMember = null;
-
+        System.out.println("아이디와 비밀번호를 입력해주세요");
         System.out.printf("아이디 : ");
         String userId = Container.getScanner().nextLine().trim();
         System.out.printf("비밀번호 : ");

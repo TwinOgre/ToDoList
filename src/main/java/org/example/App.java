@@ -22,11 +22,13 @@ public class App {
     public void run() {
         System.out.println("=== ToDoList 실행 ===");
         while(true){
-            System.out.print("명령) ");
+            System.out.print("\n명령) ");
             String command = Container.getScanner().nextLine().trim();
             switch (command){
                 case "종료":
                     return;
+                case "명령어":
+                    break;
                 case "회원가입":
                     memberController.join();
                     break;

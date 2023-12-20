@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.Container;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
@@ -13,8 +14,8 @@ public class ToDoList {
     private int memberId;
     private String toDoTitle;
     private String toDoExplain;
-    private String regDate;
-    private String updateDate;
+    private LocalDateTime regDate;
+    private LocalDateTime updateDate;
     private String userId;
     private boolean executionStatus;
 
@@ -24,8 +25,8 @@ public class ToDoList {
         this.memberId = (int) row.get("memberId");
         this.toDoTitle = (String) row.get("toDoTitle");
         this.toDoExplain = (String) row.get("toDoExplain");
-        this.regDate = row.get("regDate").toString();
-        this.updateDate = row.get("updateDate").toString();
+        this.regDate =(LocalDateTime) row.get("regDate");
+        this.updateDate =(LocalDateTime) row.get("updateDate");
         this.userId = (String)row.get("userId");
         this.executionStatus = (boolean) row.get("executionStatus");
     }

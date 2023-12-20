@@ -97,7 +97,7 @@ public class ToDoListRepository {
     }
 
     public void modify(int id, String title, String toDoExplain) {
-        String sql = String.format("UPDATE toDoList SET toDoTitle = '%s', toDoExplain = '%s' WHERE id = %d", title, toDoExplain, id);
+        String sql = String.format("UPDATE toDoList SET toDoTitle = '%s', toDoExplain = '%s', updateDate = now() WHERE id = %d", title, toDoExplain, id);
         Container.getDbConnection().update(sql);
     }
 

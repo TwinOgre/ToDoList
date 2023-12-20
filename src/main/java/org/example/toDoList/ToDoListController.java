@@ -63,9 +63,13 @@ public class ToDoListController {
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             if (tDL.isExecutionStatus() == true) {
-                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
+                String regDate = Container.formatDate(tDL.getRegDate());
+                String updateDate = Container.formatDate(tDL.getUpdateDate());
+                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
+                String regDate = Container.formatDate(tDL.getRegDate());
+                String updateDate = Container.formatDate(tDL.getUpdateDate());
+                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
             }
         }
     }
@@ -121,12 +125,10 @@ public class ToDoListController {
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             if (tDL.isExecutionStatus() == true) {
-                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
-                toDoContentsController.printContents(tDL.getId());
+                this.inCompleteListPrinter(tDL);
 
             } else if (tDL.isExecutionStatus() == false) {
-                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
-                toDoContentsController.printContents(tDL.getId());
+                this.completeListPrinter(tDL);
             }
         }
     }
@@ -143,8 +145,7 @@ public class ToDoListController {
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
-            System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
-            toDoContentsController.printContents(tDL.getId());
+            this.inCompleteListPrinter(tDL);
         }
     }
 
@@ -156,8 +157,7 @@ public class ToDoListController {
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
-            System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), tDL.getRegDate(), tDL.getUpdateDate());
-            toDoContentsController.printContents(tDL.getId());
+            this.completeListPrinter(tDL);
         }
     }
 
@@ -238,7 +238,7 @@ public class ToDoListController {
             // 완료된 상세항목 접근시 다시 입력하게 하기.
             ToDoContents toDoContents = toDoContentsController.findByListIdAndResetId(completeId, completeContentsId);
             if (toDoContents.isExecutionStatus() == false) {
-                System.out.println(completeContentsId + "번 상세항목은 이미 완료되었습니다.");
+                System.out.println("❗" + completeContentsId + "번 상세항목은 이미 완료되었습니다.");
                 Container.getScanner().nextLine();
                 continue;
             }
@@ -246,7 +246,18 @@ public class ToDoListController {
             System.out.println(completeId + "번 글의 " + completeContentsId + "번 상세항목이 완료되었습니다.");
             Container.getScanner().nextLine();
         }
-
+    }
+    public void completeListPrinter(ToDoList tDL){
+        String regDate = Container.formatDate(tDL.getRegDate());
+        String updateDate = Container.formatDate(tDL.getUpdateDate());
+        System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
+        toDoContentsController.printContents(tDL.getId());
+    }
+    public void inCompleteListPrinter(ToDoList tDL){
+        String regDate = Container.formatDate(tDL.getRegDate());
+        String updateDate = Container.formatDate(tDL.getUpdateDate());
+        System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
+        toDoContentsController.printContents(tDL.getId());
     }
 }
 
