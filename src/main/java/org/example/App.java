@@ -27,8 +27,6 @@ public class App {
             switch (command){
                 case "종료":
                     return;
-                case "명령어":
-                    break;
                 case "회원가입":
                     memberController.join();
                     break;
