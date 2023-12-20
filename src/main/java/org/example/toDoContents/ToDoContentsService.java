@@ -32,4 +32,7 @@ public class ToDoContentsService {
     public ToDoContents findByListIdAndResetId(int listId, int resetByListId){
         return toDoContentsRepository.findByListIdAndResetId(listId, resetByListId);
     }
+    public void printContents(int toDoListId){
+        toDoContentsRepository.printContents(toDoListId);
+    }
 }

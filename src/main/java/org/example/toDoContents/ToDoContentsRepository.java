@@ -75,4 +75,16 @@ public class ToDoContentsRepository {
         String sql = String.format("UPDATE toDoContents SET executionStatus = FALSE WHERE listId = %d AND resetByCreateId =%d;",listId,resetByListId);
         Container.getDbConnection().update(sql);
     }
+    public void printContents(int toDoListId){
+        List<ToDoContents> toDoContentsList = this.listContent(toDoListId);
+        for (int t = 0; t < toDoContentsList.size(); t++) {
+            ToDoContents tDC = toDoContentsList.get(t);
+            if (tDC.isExecutionStatus() == true) {
+                System.out.printf("    %s  %d.  %s\n","[❌]", tDC.getResetByCreateId(), tDC.getContent() );
+            } else if (tDC.isExecutionStatus() == false) {
+                System.out.printf("    %s  %d.  %s\n", "[✅]", tDC.getResetByCreateId(), tDC.getContent());
+            }
+        }
+    }
+
 }

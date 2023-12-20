@@ -3,20 +3,20 @@ package org.example.toDoList;
 import org.example.Container;
 import org.example.member.MemberController;
 import org.example.toDoContents.ToDoContents;
-import org.example.toDoContents.ToDoContentsController;
+import org.example.toDoContents.ToDoContentsService;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
 public class ToDoListController {
     ToDoListService toDoListService;
-    ToDoContentsController toDoContentsController;
+    ToDoContentsService toDoContentsService;
     MemberController memberController;
 
     public ToDoListController() {
         toDoListService = new ToDoListService();
-        toDoContentsController = new ToDoContentsController();
+        // toDoContentsService로 바로 넘기기
+        toDoContentsService = new ToDoContentsService();
         memberController = new MemberController();
     }
 
@@ -45,7 +45,7 @@ public class ToDoListController {
                 if (content.equals("끝") || content.equals("끝 ") || content.equals(" 끝")) {
                     break;
                 }
-                toDoContentsController.createContent(listId, content);
+                toDoContentsService.createContent(listId, content);
                 System.out.println("세부항목이 등록 되었습니다.");
             }
             System.out.println(title + "이(가) 등록 되었습니다.");
@@ -93,7 +93,7 @@ public class ToDoListController {
         toDoListService.modify(toDoList.getId(), title, toDoExplain);
 
         // 세부항목이 있는 지 확인
-        ToDoContents toDoContents = toDoContentsController.findById(modifyId);
+        ToDoContents toDoContents = toDoContentsService.findById(modifyId);
         if (toDoContents == null) {
             System.out.println(modifyId + "번 글이 수정되었습니다.");
             return;
@@ -102,12 +102,12 @@ public class ToDoListController {
         String yesOrNo = Container.getScanner().nextLine().trim();
 
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
-            List<ToDoContents> toDoContentsList = toDoContentsController.listContent(modifyId);
+            List<ToDoContents> toDoContentsList = toDoContentsService.listContent(modifyId);
             for (int i = 0; i < toDoContentsList.size(); i++) {
                 int modifyContentId = toDoContentsList.get(i).getId();
                 System.out.print("세부항목: ");
                 String content = Container.getScanner().nextLine();
-                toDoContentsController.toDoContentsModify(modifyContentId, content);
+                toDoContentsService.toDoContentsModify(modifyContentId, content);
             }
             System.out.println(modifyId + "번 글이 수정되었습니다.");
         } else if (yesOrNo.equals("아니오") || yesOrNo.equals("아니")) {
@@ -205,7 +205,7 @@ public class ToDoListController {
         }
         // 먼저 세부항목이 없는 경우 완료처리✅
         // 세부항목이 없는지 확인✅
-        if (toDoContentsController.findById(completeId) == null) {
+        if (toDoContentsService.findById(completeId) == null) {
             toDoListService.complete(completeId);
             System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 " + Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
             Container.getScanner().nextLine();
@@ -213,7 +213,7 @@ public class ToDoListController {
         }
         while (true) {
             // 상세항목이 전부 완료처리 되면 원글 완료처리후 종료(return)하기.
-            List<ToDoContents> toDoContentsList = toDoContentsController.listContent(completeId);
+            List<ToDoContents> toDoContentsList = toDoContentsService.listContent(completeId);
             for (int i = 0; i < toDoContentsList.size(); i++) {
                 if (toDoContentsList.get(i).isExecutionStatus() == true) {
                     break;
@@ -225,7 +225,7 @@ public class ToDoListController {
                 }
 
             }
-            toDoContentsController.printContents(completeId);
+            toDoContentsService.printContents(completeId);
             System.out.println("상세항목 완료를 중단하고 싶다면 \'-1\'을 입력해주세요.");
             System.out.print("완료할 상세 ID번호를 입력해주세요) ");
 
@@ -236,13 +236,13 @@ public class ToDoListController {
                 return;
             }
             // 완료된 상세항목 접근시 다시 입력하게 하기.
-            ToDoContents toDoContents = toDoContentsController.findByListIdAndResetId(completeId, completeContentsId);
+            ToDoContents toDoContents = toDoContentsService.findByListIdAndResetId(completeId, completeContentsId);
             if (toDoContents.isExecutionStatus() == false) {
                 System.out.println("❗" + completeContentsId + "번 상세항목은 이미 완료되었습니다.");
                 Container.getScanner().nextLine();
                 continue;
             }
-            toDoContentsController.completeContent(completeId, completeContentsId);
+            toDoContentsService.completeContent(completeId, completeContentsId);
             System.out.println(completeId + "번 글의 " + completeContentsId + "번 상세항목이 완료되었습니다.");
             Container.getScanner().nextLine();
         }
@@ -251,13 +251,13 @@ public class ToDoListController {
         String regDate = Container.formatDate(tDL.getRegDate());
         String updateDate = Container.formatDate(tDL.getUpdateDate());
         System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
-        toDoContentsController.printContents(tDL.getId());
+        toDoContentsService.printContents(tDL.getId());
     }
     public void inCompleteListPrinter(ToDoList tDL){
         String regDate = Container.formatDate(tDL.getRegDate());
         String updateDate = Container.formatDate(tDL.getUpdateDate());
         System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
-        toDoContentsController.printContents(tDL.getId());
+        toDoContentsService.printContents(tDL.getId());
     }
 }
 
