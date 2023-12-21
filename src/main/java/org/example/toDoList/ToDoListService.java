@@ -13,7 +13,7 @@ public class ToDoListService {
         toDoListRepository.create(title, briefDescription);
     }
 
-    public ToDoList memberFindByTitle(String title, String explain) {
+    public ToDoList toDoListFindByTitleAndExplain(String title, String explain) {
         return toDoListRepository.toDoListFindByTitleAndExplain(title,explain);
     }
 

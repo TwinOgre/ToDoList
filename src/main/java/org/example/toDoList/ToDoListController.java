@@ -31,7 +31,7 @@ public class ToDoListController {
         String briefDescription = Container.getScanner().nextLine();
 
         toDoListService.create(title, briefDescription);
-        ToDoList toDoList = toDoListService.memberFindByTitle(title,briefDescription);
+        ToDoList toDoList = toDoListService.toDoListFindByTitleAndExplain(title,briefDescription);
 
         System.out.print("상세 항목을 작성하시겠습니까?");
         String yesOrNo = Container.getScanner().nextLine().trim();
@@ -258,7 +258,7 @@ public class ToDoListController {
                     break;
                 } else if (toDoContentsList.get(toDoContentsList.size() - 1) == toDoContentsList.get(i) && toDoContentsList.get(i).isExecutionStatus() == false) {
                     toDoListService.complete(completeId);
-                    System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 " + Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!");
+                    System.out.println(completeId + "번 할일이 완료되었습니다. 할일을 " + Container.getLoginedMember().getCompleteCount() + "번 완료했습니다. 축하합니다!🎉");
 
                     return;
                 }
