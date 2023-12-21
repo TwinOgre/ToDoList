@@ -41,8 +41,6 @@ INSERT INTO `member` SET userId = 'user1', password = '1234', completeCount = 1,
 INSERT INTO toDoList SET memberId = 1, toDoTitle = 'testcomplete', toDoExplain = 'test0100', regDate = now(), updateDate = now(), executionStatus = false;
 INSERT INTO toDoList SET memberId = 2, toDoTitle = 'test02', toDoExplain = 'test0200', regDate = now(), updateDate = now(), executionStatus = false;
 
-
-
 INSERT INTO toDoContents SET memberId = 1, listId = 1, resetByCreateId = 6, content = 'testtt', regDate = now(), updateDate = now(), executionStatus = FALSE;
 
 SELECT * FROM toDoList WHERE memberId = 1 and executionStatus = TRUE;
