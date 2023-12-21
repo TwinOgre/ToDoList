@@ -33,9 +33,8 @@
 <br>
 
 ## 👀 시연영상
-[![이미지 텍스트](스크린샷 이미지)](유투브링크)
 
-[![Video Label](http://img.youtube.com/vi/'유튜브주소의id'/0.jpg)](https://youtu.be/'유튜브주소의id')
+[![Video Label](http://img.youtube.com/vi/3bRkaf1RRak/0.jpg)](https://youtu.be/3bRkaf1RRak)
 
 ## 🔥 트러블 슈팅
 
