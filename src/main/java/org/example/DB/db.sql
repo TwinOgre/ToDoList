@@ -63,4 +63,7 @@ UPDATE toDoContents SET content = '%s' WHERE id = %d;
 UPDATE toDoContents SET executionStatus = FALSE WHERE listId = 3 AND resetByCreateId =5;
 UPDATE toDoList SET executionStatus = FALSE WHERE id = 1;
 UPDATE `member` SET completeCount = 1 WHERE id = 1;
-UPDATE toDoContents SET ex
+-- 아래 sql toDoList- modify레포지토리에 대입해보기
+UPDATE toDoList SET toDoTitle = '달리기1', toDoExplain = '빠르게달리기', updateDate = now() WHERE id = 1;
+select * from toDoList where toDoExplain = '아침에 하기';
+SELECT * FROM toDoList JOIN `member` WHERE toDoList.memberId = `member`.id;

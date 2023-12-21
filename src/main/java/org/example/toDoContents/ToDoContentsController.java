@@ -23,8 +23,8 @@ public class ToDoContentsController {
     public ToDoContents findByModifyId(int listId, int modifyId){
         return toDoContentsService.findByModifyId(listId,modifyId);
     }
-    public void toDoContentsModify(int modifyContentId, String content){
-         toDoContentsService.toDoContentsModify(modifyContentId, content);
+    public void toDoContentsModify(int modifyId, int modifyContentId, String content){
+         toDoContentsService.toDoContentsModify(modifyId, modifyContentId, content);
     }
     public void printContents(int toDoListId){
         toDoContentsService.printContents(toDoListId);

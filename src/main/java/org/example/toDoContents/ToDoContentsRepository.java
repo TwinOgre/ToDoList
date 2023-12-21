@@ -66,8 +66,8 @@ public class ToDoContentsRepository {
 
     }
 
-    public void toDoContentsModify(int modifyContentId, String content) {
-        String sql = String.format("UPDATE toDoContents SET content = '%s' WHERE id = %d", content, modifyContentId);
+    public void toDoContentsModify(int modifyId, int modifyContentId, String content) {
+        String sql = String.format("UPDATE toDoContents SET content = '%s' WHERE listid = %d and resetByCreateId = %d", content, modifyId, modifyContentId);
         Container.getDbConnection().update(sql);
     }
 

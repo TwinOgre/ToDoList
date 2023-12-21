@@ -22,8 +22,8 @@ public class ToDoContentsService {
         return toDoContentsRepository.findByModifyId(listId,modifyId);
     }
 
-    public void toDoContentsModify(int modifyContentId, String content) {
-        toDoContentsRepository.toDoContentsModify(modifyContentId, content);
+    public void toDoContentsModify(int modifyId, int modifyContentId, String content) {
+        toDoContentsRepository.toDoContentsModify(modifyId, modifyContentId, content);
     }
 
     public void completeContent(int listId, int resetByListId) {

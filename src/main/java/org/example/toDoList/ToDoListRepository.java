@@ -36,7 +36,7 @@ public class ToDoListRepository {
 
     public List<ToDoList> list() {
         List<ToDoList> toDoListList = new ArrayList<>();
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from `toDoList`");
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("SELECT * FROM toDoList JOIN `member` WHERE toDoList.memberId = `member`.id");
         return findByRows(toDoListList, rows);
     }
 

@@ -61,18 +61,18 @@ public class ToDoListController {
             return;
         }
         List<ToDoList> toDoListList = toDoListService.list();
-        System.out.println("실행여부 / id / 제목 / 간략설명 / 등록일 / 수정일 / ");
+        System.out.println("실행여부 / id / 작성자 / 제목 / 간략설명 / 등록일 / 수정일 / ");
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
             ToDoList tDL = toDoListList.get(i);
             if (tDL.isExecutionStatus() == true) {
                 String regDate = Container.formatDate(tDL.getRegDate());
                 String updateDate = Container.formatDate(tDL.getUpdateDate());
-                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[❌]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
+                System.out.printf("%s  %d  %s  %s  %s  %s  %s\n", "[❌]", tDL.getId(),tDL.getUserId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
             } else if (tDL.isExecutionStatus() == false) {
                 String regDate = Container.formatDate(tDL.getRegDate());
                 String updateDate = Container.formatDate(tDL.getUpdateDate());
-                System.out.printf("%s  %d  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
+                System.out.printf("%s  %d  %s  %s  %s  %s  %s\n", "[✅]", tDL.getId(), tDL.getUserId(), tDL.getToDoTitle(), tDL.getToDoExplain(), regDate, updateDate);
             }
         }
     }
@@ -107,14 +107,30 @@ public class ToDoListController {
         String yesOrNo = Container.getScanner().nextLine().trim();
 
         if (yesOrNo.equals("예") || yesOrNo.equals("네")) {
-            List<ToDoContents> toDoContentsList = toDoContentsService.listContent(modifyId);
-            for (int i = 0; i < toDoContentsList.size(); i++) {
-                int modifyContentId = toDoContentsList.get(i).getId();
+//            List<ToDoContents> toDoContentsList = toDoContentsService.listContent(modifyId);
+            while(true){
+                toDoContentsService.printContents(modifyId);
+                System.out.println("상세항목 수정을 중단하고 싶다면 \'-1\'을 입력해주세요.");
+                System.out.print("수정할 상세 ID번호를 입력해주세요) ");
+                int modifyContentsId = Container.getScanner().nextInt();
+                if (modifyContentsId == -1) {
+                    System.out.println("수정처리를 중단합니다.");
+                    Container.getScanner().nextLine();
+                    return;
+                }
+                ToDoContents toDoContents1 = toDoContentsService.findById(modifyContentsId);
+                if(toDoContents1 == null){
+                    System.out.println(modifyContentsId + "번 상세항목은 존재하지 않습니다.");
+                    Container.getScanner().nextLine();
+                    return;
+                }
+                Container.getScanner().nextLine();
                 System.out.print("세부항목: ");
                 String content = Container.getScanner().nextLine();
-                toDoContentsService.toDoContentsModify(modifyContentId, content);
+
+                toDoContentsService.toDoContentsModify(modifyId, modifyContentsId, content);
+                System.out.println(modifyId + "번 글의 " + modifyContentsId + "번 상세항목이 수정되었습니다.");
             }
-            System.out.println(modifyId + "번 글이 수정되었습니다.");
         } else if (yesOrNo.equals("아니오") || yesOrNo.equals("아니")) {
             System.out.println(modifyId + "번 글이 수정되었습니다.");
         }
@@ -127,7 +143,7 @@ public class ToDoListController {
         }
         List<ToDoList> toDoListList = toDoListService.myList();
 
-        System.out.println("id / 제목 / 간략설명 / 등록일 / 수정일 / 실행여부");
+        System.out.println("실행여부 / id / 제목 / 간략설명 / 등록일 / 수정일 / ");
         System.out.println("- 상세항목");
         System.out.println("==================================================");
         for (int i = 0; i < toDoListList.size(); i++) {
