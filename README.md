@@ -33,9 +33,8 @@
 <br>
 
 ## 👀 시연영상
-[![이미지 텍스트](스크린샷 이미지)](유투브링크)
 
-[![Video Label](http://img.youtube.com/vi/'유튜브주소의id'/0.jpg)](https://youtu.be/'유튜브주소의id')
+[![Video Label](http://img.youtube.com/vi/3bRkaf1RRak/0.jpg)](https://youtu.be/3bRkaf1RRak)
 
 ## 🔥 트러블 슈팅
 
@@ -96,9 +95,11 @@ create()에서 추가한 세부항목이 표시가 안된다.
 ## 🛑 원인
 - create() 중 세부항목의 구현 시 title(제목) 만을 가지고 데이터를 찾은 것이 문제였다.
 => title이 동일한 경우 이전의 글에 세부항목이 추가되고 있었다.
+
 ```java
-// 문제의 코드
+
 toDoListService.memberFindByTitle(title);
+// 문제의 코드
 ```
 <br>
 <br>
